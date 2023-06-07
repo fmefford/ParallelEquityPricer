@@ -3,6 +3,7 @@ from datetime import datetime
 import numpy as np
 from pandas.tseries.offsets import BDay
 import yfinance as yf
+from scipy.stats import kstest
 
 years_lookback = 1
 backtest_days = 7
@@ -14,6 +15,8 @@ hist_prices = data["Adj Close"]
 iterations = 100000
 
 log_returns = np.log(hist_prices).diff().dropna().to_numpy()
+print(kstest(log_returns, "norm"))
+
 s0 = hist_prices.iloc[-1]
 mu = log_returns.mean()
 sigma = log_returns.std()
